@@ -2,6 +2,10 @@
 
 using Xamarin.Forms;
 
+using Microsoft.AppCenter;
+using Microsoft.AppCenter.Analytics;
+using Microsoft.AppCenter.Crashes;
+
 namespace AppCenterWorkshop
 {
     public partial class App : Application
@@ -13,12 +17,14 @@ namespace AppCenterWorkshop
         {
             InitializeComponent();
 
+            AppCenter.Start("android=d7d60576-6532-482e-bfee-953ced2ff72a;" + "ios=b0502e2b-7c31-4dee-a6f2-a865d8ab7668;", typeof(Analytics), typeof(Crashes));
+
             if (UseMockDataStore)
                 DependencyService.Register<MockDataStore>();
             else
                 DependencyService.Register<CloudDataStore>();
 
-            if (Device.RuntimePlatform == Device.iOS)
+            if (Xamarin.Forms.Device.RuntimePlatform == Xamarin.Forms.Device.iOS)
                 MainPage = new MainPage();
             else
                 MainPage = new NavigationPage(new MainPage());
